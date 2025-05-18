@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "../layouts/BlogPost.astro";
+import { render } from "astro:content";
+import CardSection from "@/components/CardSection.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blogs");
+  return posts.map((post) => {
+    const fileName = post.id.split("/").pop();
+    return {
+      params: { blogs: fileName },
+      props: post,
+    };
+  });
+}
+type Props = CollectionEntry<"blogs">;
+const post = Astro.props;
+const { Content, headings } = await render(post);
+
+let allPosts = await getCollection("blogs");
+const currentId = `${post.collection}/${post.id}`;
+const filteredPosts = allPosts.filter((post) => post.id !== currentId);
+---
+
+<BlogPost
+  type="blogpost"
+  {...post.data}
+  headings={headings}
+>
+  <Content slot="post-content" />
+  <CardSection
+    sectionName="Similar Posts"
+    posts={filteredPosts}
+    slot="simalar-posts"
+    moreBlogs
+  />
+</BlogPost>

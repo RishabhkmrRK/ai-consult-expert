@@ -1,0 +1,65 @@
+---
+import { Link } from "./ui-ext/link";
+import { NavigationBar } from "./ui-ext/NavBar";
+import { Button } from "./ui/button";
+import { Menu } from "lucide-react";
+---
+
+<header
+  class="z-4 h-[52px] mt-[3px] w-full flex flex-col justify-start items-center sm:h-[56px] sm:mt-[4px] lg:h-[64px]"
+>
+  <div
+    class="z-4 flex justify-between bg-linear-to-t from-secondary-foreground to-secondary-foreground/90 max-w-[1312px] w-full rounded-2xl items-center h-[52px] shadow-md px-[16px] sm:h-[54px] sm:px-9 lg:h-[60px] lg:px-[60px]"
+  >
+    <a
+      href="/"
+      class="h-[46px] rounded-xl z-3 flex items-center justify-center overflow-hidden sm:h-[56px] lg:w-[166px] lg:h-[64px]"
+    >
+      <img
+        src="/ai-consult-expert-logo-white.svg"
+        alt="logo"
+        width=""
+        height="52"
+        class="h-[42px] text-white object-cover sm:h-[46px] lg:h-[52px]"
+      />
+    </a>
+    <div class="hidden lg:flex">
+      <NavigationBar client:visible />
+    </div>
+    <div class="w-[106px] flex flex-row-reverse gap-2">
+      <Button
+        client:visible
+        id="menu-btn"
+        aria-label="open menu"
+        size="icon"
+        className="bg-primary-foreground text-primary lg:hidden"
+        ><Menu /></Button
+      >
+      <Link
+        href=""
+        className="p-3 rounded-2xl hover:bg-primary-foreground hover:text-accent-500"
+        >Signup</Link
+      >
+      <Link href="" className="p-3 rounded-2xl bg- hidden sm:flex">Login</Link>
+    </div>
+  </div>
+  <div
+    id="dropmenu"
+    class="hidden z-3 flex-col bg-white w-[calc(100%-48px)] rounded-b-md lg:hidden"
+  >
+    <a class="p-2.5 border-b-2 flex justify-center" href="/">Home</a>
+    <a class="p-2.5 border-b-2 flex justify-center" href="/">About</a>
+    <a class="p-2.5 border-b-2 flex justify-center" href="/">Contact</a>
+    <a class="p-2.5 border-b-2 flex justify-center" href="/"> Services</a>
+  </div>
+</header>
+
+<script is:inline>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("dropmenu");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+    menu.classList.toggle("flex");
+  });
+</script>

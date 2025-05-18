@@ -1,0 +1,70 @@
+---
+import Card from "./Card.astro";
+import { Link } from "./ui-ext/link";
+
+type Card = {
+  imageSrc: string;
+  imageAlt: string;
+  category: string;
+  title: string;
+  desc: string;
+  slug: string;
+};
+
+interface Props {
+  sectionName: string;
+  posts: any;
+  hTag?: "h2" | "h5";
+  moreBlogs: boolean;
+}
+
+const { sectionName, posts, hTag = "h5", moreBlogs }: Props = Astro.props;
+
+type card = {
+  imageSrc: string;
+  imageAlt: string;
+  category: string;
+  title: string;
+  desc: string;
+  slug: string;
+};
+
+const cardsData = posts.map((post: any) => {
+  return {
+    imageSrc: post.data.heroImage,
+    imageAlt: post.data.alt,
+    category: post.data.category,
+    title: post.data.title,
+    desc: post.data.description,
+    slug: post.id.split("/").pop(),
+  };
+});
+---
+
+<div class="w-full bg-white flex flex-col justify-center items-center">
+  <div
+    class="w-full max-w-[1120px] px-8 pt-2 pb-10 gap-4 flex flex-col justify-center items-center sm:pt-4 sm:pb-12 md:pt-8 md:pb-16 sm:gap-6"
+  >
+    <h2
+      class="p-0 text-4xl sm:text-5xl text-transparent bg-clip-text bg-linear-to-t from-black to-[#a6a6a6]"
+    >
+      {sectionName}
+    </h2>
+    <div class="flex flex-row flex-wrap justify-center gap-6">
+      {
+        cardsData.map((card: Card) => {
+          return <Card {...card} hTag={hTag} />;
+        })
+      }
+    </div>
+    {
+      moreBlogs && (
+        <Link href="/blogs" variant="default" size="lg" className="text-base">
+          More Blogs
+        </Link>
+      )
+    }
+  </div>
+</div>
+
+<script></script>

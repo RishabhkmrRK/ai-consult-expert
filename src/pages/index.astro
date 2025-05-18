@@ -1,4 +1,9 @@
 ---
+import "../styles/global.css";
+import CardSection from "@/components/CardSection.astro";
+import { getCollection } from "astro:content";
+
+let blogs = await getCollection("blogs");
 
 ---
 
@@ -11,6 +16,7 @@
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>Astro</h1>		
+		<CardSection sectionName="Recent Blogs" posts={blogs} hTag="h2" moreBlogs/>
 	</body>
 </html>

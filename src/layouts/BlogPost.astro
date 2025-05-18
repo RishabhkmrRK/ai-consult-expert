@@ -1,0 +1,133 @@
+---
+import "../styles/global.css";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import type { MarkdownHeading } from "astro";
+import TableOfContents from "../components/TableOfContents.jsx";
+import { Image } from "astro:assets";
+import { TableOfContents as TOCIcon } from "lucide-react";
+import { getImage } from "astro:assets";
+
+type Props = {
+  type: "page" | "blogpost";
+  title: string;
+  description: string;
+  heroImage: string;
+  alt: string;
+  pubDate: Date;
+  tags: string[];
+  keywords: string[];
+  category: string;
+  headings: MarkdownHeading[];
+  faq?: { question: string; answer: string }[];
+};
+
+const {
+  type,
+  title,
+  description,
+  pubDate,
+  heroImage,
+  alt,
+  category,
+  tags,
+  keywords,
+  headings,
+  faq,
+} = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/content/**/*.{jpeg,jpg,png,gif,webp,svg}"
+);
+if (!images[heroImage])
+  throw new Error(
+    `"${heroImage}" does not exist in glob: "/src/content/**/*.{jpeg,jpg,png,gif,webp,svg}"`
+  );
+
+const heroImageLink = (await getImage({ src: images[heroImage]() })).src;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      type={type}
+      title={title}
+      description={description}
+      image={heroImageLink}
+      {faq}
+      {pubDate}
+    />
+  </head>
+  <body>
+    <div class="py-2 w-full px-2 sm:px-4">
+      <Header />
+    </div>
+    <main
+      class="w-full bg-white py-4 rounded-3xl flex flex-col items-center gap-8 sm:py-8"
+    >
+      <div class="max-w-[1120px] w-full flex flex-col gap-4 px-4 sm:px-8">
+        <div class="flex items-center gap-2 leading-[100%]">
+          <a href="/blogs" class="underline hover:text-pink-500">Blogs</a>
+          <p>></p>
+          <a
+            href=`/blogs/${category}`
+            class="capitalize underline hover:text-pink-500 text-nowrap">{category}</a
+          >
+          <p>></p>
+          <p
+            class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 to-blue-500 truncate"
+          >
+            {title}
+          </p>
+        </div>
+        <h1 class="break-all-xs">{title}</h1>
+        <a
+          href=`/blogs/${category}`
+          class="bg-linear-to-t from-orange-500 to-orange-500 w-fit px-2 py-1 rounded-lg text-white capitalize"
+          >{category}</a
+        >
+      </div>
+      <div class="max-w-[1120px] flex lg:gap-6 w-full px-4 sm:px-8">
+        <article>
+          <Image
+            src={images[heroImage]()}
+            alt={alt}
+            width="935"
+            loading="eager"
+            class="rounded-xl mb-4"
+            widths={[608, 935]}
+            sizes={`(max-width: 639px) 608px, 935px`}
+          />
+          <div
+            id="tocBtn"
+            class="flex items-center gap-2 text-white bg-secondary-foreground/90 px-1 py-1.5 rounded-md justify-center max-w-60 lg:hidden"
+          >
+            <TOCIcon className="stroke-[3px] mb-0.5" />
+            <h2 class="text-xl font-bold tracking-normal p-0">
+              Table of Contents
+            </h2>
+          </div>
+          <slot name="post-content" />
+        </article>
+        <aside>
+          <TableOfContents data={headings} client:visible />
+        </aside>
+      </div>
+      <div
+        class="w-full h-25 -mt-4 -mb-0 bg-secondary-foreground/20 [clip-path:polygon(0%_25%,100%_0%,100%_75%,0_100%)]"
+      >
+      </div>
+      <div>
+        <slot name="simalar-posts" />
+      </div>
+    </main>
+    <Footer />
+  </body><script>
+    document.getElementById("tocBtn")?.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("openTOC"));
+      document.body.classList.add("overflow-hidden");
+    });
+  </script>
+</html>

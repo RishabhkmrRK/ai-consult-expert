@@ -1,9 +1,27 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-400.woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-700.woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-accent-100: var(--accent-100);
+  --color-accent-300: var(--accent-300);
+  --color-accent-500: var(--accent-500);
+  --color-accent-700: var(--accent-700);
+  --color-accent-900: var(--accent-900);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -42,6 +60,11 @@
 }
 
 :root {
+  --accent-100: #E6F0FE;
+  --accent-300: #3f86f1;
+  --accent-500: #096AF7;
+  --accent-700: #0755C6;
+  --accent-900: #054094;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -52,7 +75,7 @@
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: oklch(0.275 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -116,5 +139,61 @@
   }
   body {
     @apply bg-background text-foreground;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:"Inter", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.836);
+  }
+  h1,h2,h3,h4,h5,h6 {
+    line-height: 130%;
+    letter-spacing: calc(clamp(3rem, 2.5385rem + 2.0513vw, 4rem)*(-2)/100);
+    scroll-margin-top: 50px;
+  }
+  h1 {
+    font-size: clamp(3rem, 2.5385rem + 2.0513vw, 4rem);
+    font-weight: bold;
+  }
+  h2 {
+    font-size: clamp(2.4rem, 2.1231rem + 1.2308vw, 3rem);
+    font-weight: bold;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: clamp(2.1rem, 1.9154rem + 0.8205vw, 2.5rem);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  h4 {
+    font-size: clamp(1.8rem, 1.7077rem + 0.4103vw, 2rem);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  h5 {
+    font-size: clamp(1.4rem, 1.3538rem + 0.2051vw, 1.5rem);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  h6 {
+    font-size: clamp(1.2rem, 1.1769rem + 0.1026vw, 1.25rem);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  p {
+    font-size: 1.125rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  /* .break-all-xs is only utilized in BlogPost h1 */
+  @media (max-width: 339px) {
+    .break-all-xs {
+      word-break: break-all;
+    }
   }
 }
