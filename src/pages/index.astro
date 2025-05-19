@@ -2,7 +2,6 @@
 import PostFilter from "@/components/PostFilter";
 import "../styles/global.css";
 import { getImage } from "astro:assets";
-import { Debug } from "astro:components";
 import { getCollection } from "astro:content";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -45,9 +44,6 @@ const blogCardData = await Promise.all(
     />
   </head>
   <body>
-    <!-- <div class="w-[50%]">
-			<Debug {blogCardData} />
-		</div> -->
     <div class="flex flex-col w-full relative items-center -mb-2 md:-mb-8 ">
       <div class="px-2 sm:px-3 absolute w-full top-2">
         <Header />

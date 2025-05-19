@@ -14,20 +14,10 @@ type Card = {
 interface Props {
   sectionName: string;
   posts: any;
-  hTag?: "h2" | "h5";
   moreBlogs: boolean;
 }
 
-const { sectionName, posts, hTag = "h5", moreBlogs }: Props = Astro.props;
-
-type card = {
-  imageSrc: string;
-  imageAlt: string;
-  category: string;
-  title: string;
-  desc: string;
-  slug: string;
-};
+const { sectionName, posts, moreBlogs }: Props = Astro.props;
 
 const cardsData = posts.map((post: any) => {
   return {
@@ -53,7 +43,7 @@ const cardsData = posts.map((post: any) => {
     <div class="flex flex-row flex-wrap justify-center gap-6">
       {
         cardsData.map((card: Card) => {
-          return <Card {...card} hTag={hTag} />;
+          return <Card {...card} />;
         })
       }
     </div>

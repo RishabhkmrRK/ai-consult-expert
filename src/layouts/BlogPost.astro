@@ -10,33 +10,8 @@ import { Image } from "astro:assets";
 import { TableOfContents as TOCIcon } from "lucide-react";
 import { getImage } from "astro:assets";
 
-type Props = {
-  type: "page" | "blogpost";
-  title: string;
-  description: string;
-  heroImage: string;
-  alt: string;
-  pubDate: Date;
-  tags: string[];
-  keywords: string[];
-  category: string;
-  headings: MarkdownHeading[];
-  faq?: { question: string; answer: string }[];
-};
-
-const {
-  type,
-  title,
-  description,
-  pubDate,
-  heroImage,
-  alt,
-  category,
-  tags,
-  keywords,
-  headings,
-  faq,
-} = Astro.props;
+const { title, description, pubDate, heroImage, alt, category, headings } =
+  Astro.props;
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/content/**/*.{jpeg,jpg,png,gif,webp,svg}"
@@ -71,7 +46,8 @@ const heroImageLink = (await getImage({ src: images[heroImage]() })).src;
           <p>></p>
           <a
             href=`/`
-            class="capitalize underline hover:text-pink-500 text-nowrap">{category}</a
+            class="capitalize underline hover:text-pink-500 text-nowrap"
+            >{category}</a
           >
           <p>></p>
           <p

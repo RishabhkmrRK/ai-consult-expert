@@ -53,7 +53,6 @@ export default function TableOfContents({ data }) {
 
   const closeTOC = () => {
     setIsOpen(false);
-    // console.log("close clicked!")
     document.body.classList.remove("overflow-hidden");
   };
 
