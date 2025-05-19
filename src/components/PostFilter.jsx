@@ -61,6 +61,7 @@ export default function PostFilter({ posts }) {
         Popular Posts
       </h2>
       <button
+        aria-label="filter"
         onClick={() => setShowFilters(!showFilters)}
         className="p-2 border-1 border-primary/60 rounded hover:bg-gray-100"
       >
@@ -142,7 +143,7 @@ export default function PostFilter({ posts }) {
               {post.desc}
             </p>
             <p className="text-gray-600 text-sm">{format(new Date(post.pubdate), 'MMMM d, yyyy')}
-              </p><div className="text-sm text-gray-500 flex flex-wrap gap-1">
+              </p><div className="text-sm text-gray-700 flex flex-wrap gap-1">
               {post.tags.map((tag) => (
                 <span key={tag} className="bg-gray-200 rounded px-2 py-0.5 text-xs">
                   #{tag}
