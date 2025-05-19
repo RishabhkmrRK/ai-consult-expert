@@ -1,22 +1,71 @@
 ---
+import PostFilter from "@/components/PostFilter";
 import "../styles/global.css";
-import CardSection from "@/components/CardSection.astro";
+import { getImage } from "astro:assets";
+import { Debug } from "astro:components";
 import { getCollection } from "astro:content";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import heroImage from "@/assets/blog-illustration.jpg";
+import { Image } from "astro:assets";
+import BaseHead from "@/components/BaseHead.astro";
 
 let blogs = await getCollection("blogs");
 
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/content/**/*.{jpeg,jpg,png,gif,webp,svg}"
+);
+
+const blogCardData = await Promise.all(
+  blogs.map(async (entry) => ({
+    id: entry.id,
+    title: entry.data.title,
+    desc: entry.data.description,
+    imageSrc: (
+      await getImage({
+        src: images[entry.data.heroImage](),
+        width: 400,
+        height: 274,
+      })
+    ).src,
+    alt: entry.data.alt,
+    category: entry.data.category,
+    pubdate: entry.data.pubDate,
+    tags: entry.data.tags,
+  }))
+);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>		
-		<CardSection sectionName="Recent Blogs" posts={blogs} hTag="h2" moreBlogs/>
-	</body>
+  <head>
+    <BaseHead
+      title="Ai Consult Expert Blogs"
+      description= "Smart AI Solutions for Real Business Problems"
+      image= "/ai-consult-expert-logo-black.svg"
+    />
+  </head>
+  <body>
+    <!-- <div class="w-[50%]">
+			<Debug {blogCardData} />
+		</div> -->
+    <div class="flex flex-col w-full relative items-center -mb-2 md:-mb-8 ">
+      <div class="px-2 sm:px-3 absolute w-full top-2">
+        <Header />
+      </div>
+      <div class="flex flex-col-reverse  justify-around mt-20 mb-8 items-center max-w-[1120px] sm:gap-0 sm:flex-row sm:mb-0 sm:px-4">
+        <div class="flex flex-col gap-2 max-w-100 items-center text-center px-4">
+          <h1 class="text-7xl md:text-8xl">Blogs</h1>
+          <p>
+            Stay informed and inspired with our expert insights on AI for small
+            businesses.
+          </p>
+        </div>
+        <div class="w-80 sm:min-w-80 md:w-100">
+          <Image src={heroImage} alt="blog illustration" width="600" class="" />
+        </div>
+      </div>
+    </div>
+    <PostFilter posts={blogCardData} client:load />
+    <Footer />
+  </body>
 </html>

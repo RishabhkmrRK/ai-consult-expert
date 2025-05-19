@@ -3,46 +3,26 @@ import "../styles/global.css";
 import { SITE_TITLE } from "../consts";
 
 interface Props {
-  type: "page" | "blogpost";
   title: string;
   description: string;
   image: string;
-  authorName?: string;
   pubDate?: Date;
-  faq?: { question: string; answer: string }[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // console.log(canonicalURL);
 
 const {
-  type,
   title,
   description,
-  image,
-  authorName,
-  pubDate,
-  faq,
+  image
 } = Astro.props;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/png" href="/toys-puzzles-fun-favicon-96x96.png" />
-<link
-  rel="apple-touch-icon"
-  sizes="180x180"
-  href="/toys-puzzles-fun-apple-touch-icon-180x180.png"
-/>
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={SITE_TITLE}
-  href={new URL("rss.xml", Astro.site)}
-/>
-<meta name="generator" content={Astro.generator} />
+<link rel="icon" type="image/svg" href="/ai-consult-expert-favicon.svg" />
 
 <!-- Font preloads -->
 <link

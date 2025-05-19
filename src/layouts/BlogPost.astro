@@ -52,11 +52,9 @@ const heroImageLink = (await getImage({ src: images[heroImage]() })).src;
 <html lang="en">
   <head>
     <BaseHead
-      type={type}
       title={title}
       description={description}
       image={heroImageLink}
-      {faq}
       {pubDate}
     />
   </head>
@@ -69,10 +67,10 @@ const heroImageLink = (await getImage({ src: images[heroImage]() })).src;
     >
       <div class="max-w-[1120px] w-full flex flex-col gap-4 px-4 sm:px-8">
         <div class="flex items-center gap-2 leading-[100%]">
-          <a href="/blogs" class="underline hover:text-pink-500">Blogs</a>
+          <a href="/" class="underline hover:text-pink-500">Blogs</a>
           <p>></p>
           <a
-            href=`/blogs/${category}`
+            href=`/`
             class="capitalize underline hover:text-pink-500 text-nowrap">{category}</a
           >
           <p>></p>
@@ -116,7 +114,7 @@ const heroImageLink = (await getImage({ src: images[heroImage]() })).src;
         </aside>
       </div>
       <div
-        class="w-full h-25 -mt-4 -mb-0 bg-secondary-foreground/20 [clip-path:polygon(0%_25%,100%_0%,100%_75%,0_100%)]"
+        class="w-full h-15 mt-4 -mb-0 bg-secondary-foreground/20 [clip-path:polygon(0%_0%,100%_0%,100%_100%,0_100%)]"
       >
       </div>
       <div>

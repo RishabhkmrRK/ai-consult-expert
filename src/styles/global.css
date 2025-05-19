@@ -17,6 +17,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-inter: "Inter", sans-serif;
   --color-accent-100: var(--accent-100);
   --color-accent-300: var(--accent-300);
   --color-accent-500: var(--accent-500);

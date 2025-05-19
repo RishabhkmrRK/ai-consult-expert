@@ -21,7 +21,8 @@ const { Content, headings } = await render(post);
 
 let allPosts = await getCollection("blogs");
 const currentId = `${post.collection}/${post.id}`;
-const filteredPosts = allPosts.filter((post) => post.id !== currentId);
+const currentCat = `${post.data.category}`;
+const filteredPosts = allPosts.filter((post) => post.id !== currentId && post.data.category == currentCat).slice(0, 3);
 ---
 
 <BlogPost
@@ -31,7 +32,7 @@ const filteredPosts = allPosts.filter((post) => post.id !== currentId);
 >
   <Content slot="post-content" />
   <CardSection
-    sectionName="Similar Posts"
+    sectionName="You may also like"
     posts={filteredPosts}
     slot="simalar-posts"
     moreBlogs

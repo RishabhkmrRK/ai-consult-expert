@@ -25,8 +25,8 @@ export function NavigationBar() {
             href="/"
             className={`${navigationMenuTriggerStyle()} ${
               pathname == "/"
-                ? "bg-primary-100"
-                : "text-accent-500 font-bold bg-primary-foreground/99"
+                ? "text-accent-500 font-bold bg-primary-foreground/99"
+                : ""
             }`}
           >
             Home
